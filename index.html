@@ -154,7 +154,8 @@ canvas#wheel { display: block; width: 100%; height: auto; }
 .ptable td { padding: 6px 6px; border-bottom: 1px solid rgba(30,30,64,0.5); vertical-align: middle; }
 .ptable tr:last-child td { border-bottom: none; }
 .ptable tr:hover td { background: rgba(99,102,241,0.06); }
-.ptable th:first-child, .ptable td:first-child { position: sticky; left: 0; z-index: 2; background: rgba(4,4,12,0.97); }
+.ptable th:first-child, .ptable td:first-child { position: sticky; left: 0; z-index: 2; background: rgba(4,4,12,0.97); min-width: 28px; }
+.ptable th:nth-child(2), .ptable td:nth-child(2) { position: sticky; left: 36px; z-index: 2; background: rgba(4,4,12,0.97); }
 .p-glyph { font-size: 16px; width: 24px; text-align: center; }
 .p-name { font-weight: bold; white-space: nowrap; }
 .p-rx { font-size: 9px; color: #e05c5c; margin-left: 3px; }
