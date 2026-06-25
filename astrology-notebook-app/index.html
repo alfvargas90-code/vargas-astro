@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Astrology Notebook</title>
+  <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+  <main class="notebook-app">
+    <aside class="sidebar" aria-label="Notebook sidebar">
+      <div class="brand">
+        <p class="eyebrow">Astrology</p>
+        <h1>Notebook</h1>
+      </div>
+
+      <section class="person-section" aria-label="People">
+        <div class="section-heading">
+          <h2>People</h2>
+          <span id="personCount">0</span>
+        </div>
+        <div id="personList" class="person-list"></div>
+        <div class="button-row">
+          <button id="newPersonButton" class="small-action-button" type="button">New Person</button>
+          <button id="editPersonButton" class="small-action-button" type="button">Edit</button>
+          <button id="deletePersonButton" class="small-action-button danger" type="button">Delete</button>
+        </div>
+      </section>
+
+      <label class="search-box">
+        <span>Search notebooks</span>
+        <input id="notebookSearch" type="search" placeholder="Search notebooks...">
+      </label>
+
+      <section class="notebook-section" aria-label="Notebook list">
+        <div class="section-heading">
+          <h2>Notebooks</h2>
+          <span id="notebookCount">0</span>
+        </div>
+
+        <div id="notebookList" class="notebook-list"></div>
+      </section>
+
+      <button id="newNotebookButton" class="new-notebook-button" type="button">New Notebook</button>
+
+      <section class="backup-actions" aria-label="Import and export">
+        <button id="exportJsonButton" class="small-action-button" type="button">Export JSON</button>
+        <button id="exportMarkdownButton" class="small-action-button" type="button">Export Markdown</button>
+        <label class="import-label">
+          Import
+          <input id="importFileInput" type="file" accept=".json,.md,.markdown">
+        </label>
+      </section>
+    </aside>
+
+    <aside class="entry-panel" aria-label="Entry sidebar">
+      <div class="entry-panel-header">
+        <div>
+          <p class="eyebrow">Entries</p>
+          <h2 id="entryNotebookName">No notebook</h2>
+        </div>
+        <span id="entryCount">0</span>
+      </div>
+
+      <label class="category-filter">
+        <span>Category</span>
+        <select id="entryCategoryFilter">
+          <option value="All">All</option>
+          <option value="Natal">Natal</option>
+          <option value="Daily">Daily</option>
+          <option value="Transits">Transits</option>
+          <option value="Journal">Journal</option>
+          <option value="Research">Research</option>
+          <option value="Other">Other</option>
+        </select>
+      </label>
+
+      <label class="entry-search-box">
+        <span>Search entries</span>
+        <input id="entrySearch" type="search" placeholder="Title, content, category...">
+      </label>
+
+      <label class="tag-filter">
+        <span>Tag</span>
+        <select id="entryTagFilter">
+          <option value="All">All tags</option>
+        </select>
+      </label>
+
+      <section class="workspace-nav" aria-label="Person workspace navigation">
+        <button type="button" data-view="Dashboard">Dashboard</button>
+        <button type="button" data-view="Natal">Natal</button>
+        <button type="button" data-view="Solar Returns">Solar Returns</button>
+        <button type="button" data-view="Progressions">Progressions</button>
+        <button type="button" data-view="Transits">Transits</button>
+        <button type="button" data-view="Journal">Journal</button>
+        <button type="button" data-view="Research">Research</button>
+        <button type="button" data-view="Files">Files</button>
+      </section>
+
+      <div id="entryList" class="entry-list"></div>
+
+      <section class="entry-search-results" aria-label="Entry search results">
+        <div class="section-heading">
+          <h2>Search Results</h2>
+          <span id="entrySearchCount">0</span>
+        </div>
+        <div id="entrySearchResults"></div>
+      </section>
+
+      <button id="newEntryButton" class="new-entry-button" type="button">New Entry</button>
+    </aside>
+
+    <section class="editor-shell" aria-label="Entry editor">
+      <header class="editor-header">
+        <div>
+          <p id="breadcrumb" class="breadcrumb">Notebook</p>
+          <h2 id="selectedEntryTitle">No entry selected</h2>
+          <p id="selectedNotebookTitle" class="editor-subtitle">No notebook selected</p>
+        </div>
+        <div class="save-status" aria-label="Auto-save status">
+          <span class="status-dot"></span>
+          <span id="saveStatusText">Memory only</span>
+        </div>
+      </header>
+
+      <article id="editorCard" class="editor-card">
+        <div id="emptyState" class="empty-editor-state">
+          <h3>No notebook yet</h3>
+          <p>Create a notebook from the sidebar to begin.</p>
+        </div>
+      </article>
+    </section>
+  </main>
+
+  <script src="./app.js"></script>
+</body>
+</html>
