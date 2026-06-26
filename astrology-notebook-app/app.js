@@ -102,6 +102,59 @@ function createEntryRecord(title, category = DEFAULT_ENTRY_CATEGORY) {
   };
 }
 
+function createStarterNotebook() {
+  const person = state.people[0] ?? createPersonRecord("Sample Chart");
+  if (!state.people.length) state.people.push(person);
+
+  person.name = person.name === "Default Chart" ? "Sample Chart" : person.name;
+  state.selectedPersonId = person.id;
+
+  const notebook = createNotebookRecord("Astrology Starter Notebook", person.id);
+  const starterEntries = [
+    {
+      title: "Natal",
+      category: "Natal",
+      tags: ["Natal", "Chart Basics"],
+      content: "Use this entry for birth chart observations.\n\nStart with:\n- Sun sign, house, and aspects\n- Moon sign, house, and aspects\n- Rising sign and chart ruler\n- Repeating elements, modalities, and themes"
+    },
+    {
+      title: "Daily Notes",
+      category: "Daily",
+      tags: ["Daily", "Observation"],
+      content: "Use this entry for quick daily astrology notes.\n\nTrack the date, mood, visible transits, dreams, conversations, and repeated symbols."
+    },
+    {
+      title: "Transits",
+      category: "Transits",
+      tags: ["Transits"],
+      content: "Use this entry to track current transits against the natal chart.\n\nPlain notes only for now. Calculations come later."
+    },
+    {
+      title: "Journal",
+      category: "Journal",
+      tags: ["Journal"],
+      content: "Use this entry as the main astrology journal.\n\nWrite observations directly. Keep it simple and searchable."
+    },
+    {
+      title: "Research",
+      category: "Research",
+      tags: ["Research"],
+      content: "Use this entry for source notes, books, techniques, astrologers, and interpretation references."
+    }
+  ];
+
+  notebook.entries = starterEntries.map((item) => ({
+    ...createEntryRecord(item.title, item.category),
+    tags: item.tags,
+    content: item.content
+  }));
+
+  state.notebooks.push(notebook);
+  state.selectedNotebookId = notebook.id;
+  state.selectedEntryId = notebook.entries[0].id;
+  state.selectedView = "Natal";
+}
+
 function getSelectedPerson() {
   return state.people.find((person) => person.id === state.selectedPersonId) ?? null;
 }
@@ -189,10 +242,16 @@ function ensureValidSelection() {
 function restoreState() {
   state.people = readPeople();
   state.notebooks = readNotebooks();
+  let seededStarterNotebook = false;
 
   if (!state.people.length) {
     const person = createPersonRecord("Default Chart");
     state.people.push(person);
+  }
+
+  if (!state.notebooks.length) {
+    createStarterNotebook();
+    seededStarterNotebook = true;
   }
 
   state.notebooks = state.notebooks.map((notebook) => ({
@@ -203,12 +262,13 @@ function restoreState() {
   state.selectedPersonId = localStorage.getItem(STORAGE_KEYS.selectedPerson) ?? state.people[0]?.id ?? null;
   state.selectedNotebookId = localStorage.getItem(STORAGE_KEYS.selectedNotebook);
   state.selectedEntryId = localStorage.getItem(STORAGE_KEYS.selectedEntry);
-  state.selectedView = localStorage.getItem(STORAGE_KEYS.selectedView) || "Journal";
+  state.selectedView = localStorage.getItem(STORAGE_KEYS.selectedView) || (seededStarterNotebook ? "Natal" : "Journal");
   searchQuery = localStorage.getItem(STORAGE_KEYS.notebookSearch) ?? "";
   entrySearchQuery = localStorage.getItem(STORAGE_KEYS.entrySearch) ?? "";
   entryTagFilter = localStorage.getItem(STORAGE_KEYS.tagFilter) ?? "All";
 
   ensureValidSelection();
+  if (seededStarterNotebook) saveState();
 }
 
 function readPeople() {
